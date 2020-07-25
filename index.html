@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Smart LPG </title>
+		<link rel="stylesheet" href="user_home.css" />
+	</head>
+
+	<body>
+
+		<header>
+			<h1> the smart lpg </h1>
+			<a class="header" href="home.html"> Log Out </a> 
+		</header>
+		<meta http-equiv="refresh" content="5"/>
+		<div class="main">
+
+			<div class="left">
+				<p id="name"> cs4batch1 </p> <br> <br>
+				<p id="code"> ID cs4batch1 </p> <br> <br>
+				<p id="address">
+				</p>
+
+				<br> <br>
+
+				<div class="Location">
+					<h2>Location</h2>
+					<iframe width="450px" height=260px src="https://api.thingspeak.com/channels/1082545/maps/channel_show"></iframe>
+
+				</div>
+			</div>
+
+			<div class="right">
+				
+				<div class="right-up">
+					<p id="gasleak"> Flame: <b id="flame"> Unknown </b>  <br>
+						LPG Leak: <b id="gas">Unknown</b><br>
+						Safety : <b id="Safety">Unknown</b></p>
+						<br>
+					<p> Last updated at <b id="last_update">Unknown</b></p><br>
+					<a href="history.html">See history</a>
+				</div>
+
+				<div class="right-down">
+					<P><b>Last 5 readings</b></P>
+					<table style="width: 100%" id="table-home">
+						<tr>
+							<th> Time </th>
+							<th> Weight </th>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+			
+		</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+		<script>
+			var xmlhttp = new XMLHttpRequest(), x ;
+			xmlhttp.onreadystatechange = function() {
+			  if (this.readyState == 4 && this.status == 200) {
+				var myObj = JSON.parse(this.responseText);
+				// myObj.feeds.reverse();
+				x +="<tr> <th>Time</th><th>Weight</th> </tr> "; 
+				leak = "";
+				gas = "";
+				last_update = "";
+				safety="";
+				for (i in myObj.feeds)
+				{  
+					var a=moment(myObj.feeds[i].created_at).utcOffset('+0530').format('YYYY-MM-DD HH:mm');
+					leak=myObj.feeds[i].field3;
+					safety=myObj.feeds[i].field4;
+					gas=myObj.feeds[i].field2;
+					last_update = a;
+
+					x += "<tr><td>"+a+ "</td>";
+					x += "<td>" + myObj.feeds[i].field1 + "</td></tr>";
+			
+				}
+				var address="Room 39-Sahara hostel-CUSAT";
+				document.getElementById("table-home").innerHTML =x;
+				document.getElementById("address").innerHTML=address;
+				document.getElementById("flame").innerHTML=leak;
+				document.getElementById("Safety").innerHTML=safety;
+				document.getElementById("gas").innerHTML=gas;
+				document.getElementById("last_update").innerHTML=last_update;
+			  }
+			};
+			xmlhttp.open("GET", "https://api.thingspeak.com/channels/1082545/feeds.json?results=5", true);
+			xmlhttp.send();
+		</script>
+	</body>
+</html>

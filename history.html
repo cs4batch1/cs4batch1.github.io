@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+      	* {
+				margin: 0px;
+      }
+    .text{
+      margin: 5vh 0 5vh 10%;
+    }
+    #customers {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 80%;
+      margin: 0 0px 50px 10%;
+    }
+    
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      color: black;
+    }
+    
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #customers tr:hover {background-color: #ddd;}
+    
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #3795b7;
+      color: white;
+    }
+    header {
+				background-color: #3795b7;
+				padding: 30px;
+				color: white;
+				font-family: sans-serif;
+				padding-left: 120px;
+				display: flex;
+			}
+
+			h1 {
+				text-transform: uppercase;
+			}
+			.header {
+				text-decoration: none;
+				color: white;
+				font-family: sans-serif;
+				font-size: 27px;
+				padding: 5px;
+				padding-left: 740px;
+			}
+
+    </style>
+    </head>
+<body>
+<meta http-equiv="refresh" content="60"/>
+<header>
+  <h1> the smart lpg </h1>
+  <a class="header" href="home.html"> Log Out </a> 
+</header>
+<div class="text">
+<h2>History</h2>
+<p><a href="index.html">Back to home</a></p>
+</div>
+<table id="customers" style="color: white;">
+    
+    <tr> <th >Time</th> <th>Weight</th> <th>Gas</th> <th>Flame</th></tr>
+  </table>
+
+
+<!-- <p id="demo"></p> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script>
+var xmlhttp = new XMLHttpRequest(), x ;
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var myObj = JSON.parse(this.responseText);
+    myObj.feeds.reverse();
+    x +="<tr> <th>S.No</th><th>Date</th> <th>Time</th> <th>"+myObj.channel.field1+"</th> <th>Gas</th>  <th>Flame</th><th>Safety</th></tr> ";
+   
+    for (i in myObj.feeds)
+    {  
+      //  j = toint(i)+ 1
+      var a=moment(myObj.feeds[i].created_at).utcOffset('+0530').format('DD-MM-YYY');
+      var b=moment(myObj.feeds[i].created_at).utcOffset('+0530').format('HH:mm');
+        x += "<tr> <td>"+i+ "</td> <td>"+ a+ "</td>";
+        x += "<td>"+ b+ "</td>";
+        x += "<td>" + myObj.feeds[i].field1 + "</td>";
+        x += "<td>" + myObj.feeds[i].field2 + "</td>";
+        x += "<td>" + myObj.feeds[i].field3 + "</td>";
+        x += "<td>" + myObj.feeds[i].field4 + "</td></tr>";
+
+    }
+    // document.getElementsByTagName("table").innerHTML =x;
+    document.getElementById("customers").innerHTML =x;
+    // document.getElementById("demo").innerHTML = myObj.channel.last_entry_id;
+  }
+};
+xmlhttp.open("GET", "https://api.thingspeak.com/channels/1082545/feeds.json", true);
+xmlhttp.send();
+</script>
+
+
+</body>
+</html>

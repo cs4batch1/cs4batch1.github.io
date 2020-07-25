@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<style>
+		
+		body {
+			background-image: url('img1.jpg');
+			background-size: cover;
+			display: flex;
+			justify-content: space-between;
+			margin-top: 12%;
+			margin-left: 13%;
+			font-family: monospace;
+		}
+
+		h1 {
+			color: white;
+			font-size: 50px;
+			
+		}
+
+		p {
+			color: white;
+			font-size: 20px;
+		}
+
+		input[type=text], input[type=password] {
+  			width: 100%;
+  			margin-top: 60px;
+  			display: inline-block;
+  			box-sizing: border-box;
+  			border: none;
+			border-bottom: 1px solid black;
+			text-align-last: left;
+			
+		}
+
+		button {
+			background-color: #3795b7;
+ 		 	color: white;
+  			padding: 10px;
+  			margin: 30px;
+  			border: none;
+  			cursor: pointer;
+  			width: 50%;
+  			font-size: 30px;
+  		}
+
+		.left {
+			/*display: flex;*/
+		}
+
+		.right {
+			background-color:rgba(255,255,255,0.9);
+			height: 300px;
+			width: 30%;
+			padding: 4% 4%;
+		}
+
+		form {
+			text-align-last: center;
+			margin: 0;
+		}
+
+		input {
+			background-color:rgba(255,255,255,0.2);
+		}
+
+	    ::placeholder {
+	    	color: black;
+	    }
+		
+	</style>
+
+	<body>
+		<div class="left"> 
+			<h1> THE SMART LPG </h1>
+			<p> text text text text text text text text text <br> 
+					text text text text text text text text text </p>
+		</div>
+			
+		<div class="right">
+			<h2>Log in here</h2>
+			<form>
+				<label for="name"> </label>
+    			<input type="text" placeholder=" User ID " name="name" required>
+
+    			<label for="psw"> </label>
+    			<input type="password" placeholder=" Password " name="psw" required>
+        
+    			<a href="user_home.html"> <button type="submit"> <b> Log In </b> </button>
+    		</form>
+		</div>	
+	</body>
+</html>
